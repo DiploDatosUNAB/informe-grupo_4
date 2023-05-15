@@ -416,8 +416,7 @@ uso_tiempo &lt;- read_csv(&quot;datos/encuesta_uso_tiempo_2016.csv&quot;)</code>
 <p>Rango</p>
 <pre class="r"><code># Cödigo de R acá 
 # Agregá más bloques según sea necesario</code></pre>
-<p>Promedio</p>
-<p>Desvio Estandar</p>
+<p>Desvio Estandar #round (ds,(uso¡tiempo),edad)</p>
 </div>
 <div id="hipótesis" class="section level2">
 <h2>Hipótesis</h2>
@@ -427,6 +426,30 @@ no remuneradas o del cuidado de personas?</p>
 aplicaciones?</p>
 <p>3 ¿ En un dia laborable cual es el promedio de tiempo que le dedican
 al estudio las personas entre 18 y 25 años?</p>
+<p>Promedio</p>
+<pre class="r"><code>library(readr)
+uso_tiempo &lt;- read_csv(&quot;datos/encuesta_uso_tiempo_2016.csv&quot;)</code></pre>
+<pre><code>## Rows: 2336 Columns: 27
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (10): hogar, sexo, dia_laborable, dia_tipico, rango_etario, nivel_educat...
+## dbl (17): edad, trabajo_pago, trabajo_domestico_no_pago, voluntariados, estu...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>library(Rcpp)
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;
+## 
+## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag
+## 
+## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>#Filter(&quot;uso_tiempo&quot;, edad==&quot;14&quot;)</code></pre>
 </div>
 
 
