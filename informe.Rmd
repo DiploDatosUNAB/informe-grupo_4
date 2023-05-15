@@ -1,27 +1,51 @@
 ---
-title: "titulo"
-author: "nombres"
+title: "TP 1 Grupo 4"
+author: "Pilar Thill y Claudia Magliano"
 output: html_document
 ---
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-# Cargar los paquetes necesarios acá
+#knitr::opts_chunk$set(echo = TRUE)
+
+#install.packages(dplyr)
+
+
+```
+```{r}
+ library(readr)
+```
+```{r}
+#library(dplyr)
 ```
 
 
 ## Introducción
+Trabajamos sobre el analisis de la encuesta del uso del tiempo que entre otras utilidades tiene la de evaluar el indice del uso que se le da a las aplicaciones segun grupo etario, el tiempo que el trabajo remunerado les ocupa o el indice de la feminizacion de las tareas del hogar Para ello utiliza datos discretos dicotomicos como el sexo y datos continuos como el tiempo para cada tarea.
+La encuesta proviene del gobierno de la ciudad de BA y se realizo en el 2005 y 2016, aunque en este informe solo tomaremos las observaciones del 2016
 
+Fuente: https://data.buenosaires.gob.ar/dataset/uso-tiempo
 
+Variables: 27
+Observaciones: 2336
 
 ## Exploración de los datos
 
 
 ```{r}
-# Código para cargar o leer los datos
+# Código para leer los datos
+library(readr)
+read_csv("Datos/encuesta_uso_tiempo_2016.csv")
 ```
 
+
+```{r}
+library(readr)
+uso_tiempo <- read_csv("datos/encuesta_uso_tiempo_2016.csv")
+
+
+```
+Rango
 
 
 ```{r}
@@ -29,8 +53,14 @@ knitr::opts_chunk$set(echo = TRUE)
 # Agregá más bloques según sea necesario
 ```
 
+Promedio 
 
+Desvio Estandar
 
 ## Hipótesis
+ 1 ¿Que promedio de la poblacion masculina realiza tareas domenticas no remuneradas o del cuidado de personas?
+ 
+2 ¿Cual es el promedio de edad que mas tiempo dedica a las aplicaciones?
 
+3 ¿ En un dia laborable cual es el promedio de tiempo que le dedican al estudio las personas entre 18 y 25 años?
 
