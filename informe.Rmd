@@ -1,80 +1,63 @@
 ---
 title: "TP 1 Grupo 4"
-author: "Pilar Thill y Claudia Magliano"
+author: "Claudia Magliano y Pilar Thill"
 output: html_document
 ---
 
-
 ```{r setup, include=FALSE}
 #knitr::opts_chunk$set(echo = TRUE)
-
-#install.packages(dplyr)
-
-
+library(readr)
+library(dplyr)
 ```
-```{r}
- library(readr)
-```
-```{r}
-#library(dplyr)
-```
-
 
 ## Introducción
 
-Trabajamos sobre el analisis de la encuesta del uso del tiempo que entre otras utilidades tiene la de evaluar el indice del uso que se le da a las aplicaciones segun grupo etario, el tiempo que el trabajo remunerado les ocupa o el indice de la feminizacion de las tareas del hogar Para ello utiliza datos discretos dicotomicos como el sexo y datos continuos como el tiempo para cada tarea.
-La encuesta proviene del gobierno de la ciudad de BA y se realizo en el 2005 y 2016, aunque en este informe solo tomaremos las observaciones del 2016
+Este informe se centra en los datos provenientes de la Encuesta sobre Uso del Tiempo realizada en la Ciudad Autónoma de Buenos Aires durante el año 2016. Dicha encuesta fue instrumentada por la Dirección General de Estadísticas y Censos del Gobierno de la Ciudad y sus resultados fueron publicados en formato abierto en 2017. (https://data.buenosaires.gob.ar/dataset/uso-tiempo)
+La misma captura información sobre distintas variables de personas residentes en CABA: sexo, edad, nivel de estudios, horas dedicadas al trabajo productivo/pago, horas dedicadas al trabajo doméstico no pago, horas dedicadas a tareas de cuidado, tipo de hogar, ingresos (por quintiles) y estado ocupacional, entre otras. Incluye datos discretos dicotómicos como el sexo y datos continuos como el tiempo para cada tarea.
+A partir del análisis de los datos arrojados por esta encuesta se podría ponderar la diferencia en el uso del tiempo entre varones y mujeres (sobre todo en la esfera de los cuidados), el índice de la feminización de las tareas de cuidado, etc.
 
-Fuente: https://data.buenosaires.gob.ar/dataset/uso-tiempo
-
-Variables: 27
-Observaciones: 2336
+Pautas de la consigna:
+¿Qué datos son?
+¿De dónde provienen? ¿Quién los tomó?
+¿En qué período se tomaron?
 
 ## Exploración de los datos
-
+```{r}
+read.csv("datos/encuesta_uso_tiempo_2016.csv")
+```
 
 ```{r}
-# Código para leer los datos
-library(readr)
-read_csv("Datos/encuesta_uso_tiempo_2016.csv")
+uso_tiempo_2016 <- read_csv("datos/encuesta_uso_tiempo_2016.csv")
+```
+
+```{r}
+uso_tiempo_2016|>
+  summarise(n=n())
+```
+¿Qué variables tiene? Tiene variables cuantitativas y cualitativas
+¿Cuántas observaciones hay? Hay 2336 filas
+¿Cuántas variables? 27 variables
+
+```{r}
+uso_tiempo_2016 |> 
+  select(sexo,trabajo_pago,trabajo_pago2,trabajo_domestico_no_pago,trabajo_domestico_no_pago2,tareas_cuidados, tareas_cuidados2, quintil_ingreso,rango_etario)
+```
+```{r}
+uso_tiempo_2016 <-uso_tiempo_2016 |> 
+  select(sexo,trabajo_pago,trabajo_pago2,trabajo_domestico_no_pago,trabajo_domestico_no_pago2,tareas_cuidados,tareas_cuidados2,quintil_ingreso,rango_etario)
+  
+```
+Conforme la consigna se seleccionaron las variables de interés y se asignó la info generada por la selección a una variable.
+
+```{r}
+filter
 ```
 
 
-```{r}
-library(readr)
-uso_tiempo <- read_csv("datos/encuesta_uso_tiempo_2016.csv")
-
-
-```
-Rango
-
-
-```{r}
-# Cödigo de R acá 
-# Agregá más bloques según sea necesario
-```
-
-Desvio Estandar
-#round (ds,(uso¡tiempo),edad)
 
 ## Hipótesis
- 1 ¿Que promedio de la poblacion masculina realiza tareas domenticas no remuneradas o del cuidado de personas?
+1 Existe una relación directa entre las mujeres que dedican 4 horas o más al trabajo doméstico no remunerado y al trabajo productivo y su nivel de ingresos ponderado por quintiles.
  
-2 ¿Cual es el promedio de edad que mas tiempo dedica a las aplicaciones?
+2 Existe una relación inversa entre la cantidad de horas que dedican las mujeres a las tareas de cuidado con relación al tiempo que le dedican los varones (feminización del cuidado, pobreza de tiempos).
 
-3 ¿ En un dia laborable cual es el promedio de tiempo que le dedican al estudio las personas entre 18 y 25 años?
-
-Promedio 
-```{r}
-library(readr)
-uso_tiempo <- read_csv("datos/encuesta_uso_tiempo_2016.csv")
-library(Rcpp)
-library(dplyr)
-
-#Filter("uso_tiempo", edad=="14")
-
-
-
-
-
-
+3 Existe una relación entre el nivel educativo y la cantidad de horas que las mujeres dedican al trabajo remunerado.
