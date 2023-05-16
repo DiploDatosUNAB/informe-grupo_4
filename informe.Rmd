@@ -30,18 +30,11 @@ read.csv("datos/encuesta_uso_tiempo_2016.csv")
 uso_tiempo_2016 <- read_csv("datos/encuesta_uso_tiempo_2016.csv")
 ```
 
-```{r}
-uso_tiempo_2016|>
-  summarise(n=n())
-```
 ¿Qué variables tiene? Tiene variables cuantitativas y cualitativas
 ¿Cuántas observaciones hay? Hay 2336 filas
 ¿Cuántas variables? 27 variables
 
-```{r}
-uso_tiempo_2016 |> 
-  select(sexo,trabajo_pago,trabajo_pago2,trabajo_domestico_no_pago,trabajo_domestico_no_pago2,tareas_cuidados, tareas_cuidados2, quintil_ingreso,rango_etario)
-```
+
 ```{r}
 uso_tiempo_2016 <-uso_tiempo_2016 |> 
   select(sexo,trabajo_pago,trabajo_pago2,trabajo_domestico_no_pago,trabajo_domestico_no_pago2,tareas_cuidados,tareas_cuidados2,quintil_ingreso,rango_etario)
