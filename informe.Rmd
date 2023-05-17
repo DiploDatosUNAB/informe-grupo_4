@@ -50,10 +50,25 @@ uso_tiempo_2016 <-uso_tiempo_2016 |>
 Conforme la consigna se seleccionaron las variables de interés y se asignó la info generada por la selección a una variable.
 
 ```{r}
-filter
+
+filter(uso_tiempo_2016, edad=="14")
+
+filEdad <- filter(uso_tiempo_2016, edad=="14")
+
 ```
+Realizamos un filtro de encuestado de 14 años  
+
+```{r}
+uso_tiempo_2016|>
+  count("Varon", sexo)
 
 
+```
+cuenta la cantidad de varones y mujeres encuestadas
+
+```{r}
+summarize(uso_tiempo_2016, proporción_media = mean (estudio_educacion, na.rm = TRUE))
+```
 
 ## Hipótesis
 1 Existe una relación directa entre las mujeres que dedican 4 horas o más al trabajo doméstico no remunerado y al trabajo productivo y su nivel de ingresos ponderado por quintiles.
