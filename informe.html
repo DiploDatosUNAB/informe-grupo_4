@@ -19114,18 +19114,70 @@ variables</p>
   select(sexo,trabajo_pago,trabajo_pago2,trabajo_domestico_no_pago,trabajo_domestico_no_pago2,tareas_cuidados,tareas_cuidados2,quintil_ingreso,rango_etario)</code></pre>
 <p>Conforme la consigna se seleccionaron las variables de interés y se
 asignó la info generada por la selección a una variable.</p>
-<pre class="r"><code>filter</code></pre>
-<pre><code>## function (.data, ..., .by = NULL, .preserve = FALSE) 
-## {
-##     check_by_typo(...)
-##     by &lt;- enquo(.by)
-##     if (!quo_is_null(by) &amp;&amp; !is_false(.preserve)) {
-##         abort(&quot;Can&#39;t supply both `.by` and `.preserve`.&quot;)
-##     }
-##     UseMethod(&quot;filter&quot;)
-## }
-## &lt;bytecode: 0x000001be09d37868&gt;
-## &lt;environment: namespace:dplyr&gt;</code></pre>
+<pre class="r"><code>#filter(uso_tiempo_2016, edad == &quot;14&quot;)
+
+#filEdad &lt;- filter(uso_tiempo_2016, edad == &quot;14&quot;)</code></pre>
+<p>Realizamos un filtro de encuestado de 14 años</p>
+<pre class="r"><code>uso_tiempo_2016|&gt;
+  count(&quot;Varon&quot;, sexo)</code></pre>
+<pre><code>## # A tibble: 2 × 3
+##   `&quot;Varon&quot;` sexo      n
+##   &lt;chr&gt;     &lt;chr&gt; &lt;int&gt;
+## 1 Varon     Mujer  1345
+## 2 Varon     Varon   991</code></pre>
+<p>cuenta la cantidad de varones y mujeres encuestadas</p>
+<pre class="r"><code>summarize(uso_tiempo_2016, proporción_media = mean (&quot;estudio_educacion&quot;, na.rm = TRUE))</code></pre>
+<pre><code>## Warning: There was 1 warning in `summarize()`.
+## ℹ In argument: `proporción_media = mean(&quot;estudio_educacion&quot;, na.rm = TRUE)`.
+## Caused by warning in `mean.default()`:
+## ! argument is not numeric or logical: returning NA</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   proporción_media
+##              &lt;dbl&gt;
+## 1               NA</code></pre>
+<p>Calculamos la media poblacional del tiempo empleado en educacion</p>
+<pre class="r"><code>uso_tiempo_2016_b &lt;- read_csv(&quot;datos/encuesta_uso_tiempo_2016.csv&quot;)</code></pre>
+<pre><code>## Rows: 2336 Columns: 27
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (10): hogar, sexo, dia_laborable, dia_tipico, rango_etario, nivel_educat...
+## dbl (17): edad, trabajo_pago, trabajo_domestico_no_pago, voluntariados, estu...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>uso_tiempo_2016_b|&gt;
+  filter(edad &gt;&quot;18&quot;) |&gt; 
+  group_by(sexo) |&gt;
+  summarize( tiempo_Max = max(trabajo_pago), tiempo_Mim = min(trabajo_pago), desvio = sd(trabajo_pago), na.rm = TRUE)</code></pre>
+<pre><code>## # A tibble: 2 × 5
+##   sexo  tiempo_Max tiempo_Mim desvio na.rm
+##   &lt;chr&gt;      &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;
+## 1 Mujer       18.5          0   4.49 TRUE 
+## 2 Varon       22.5          0   5.00 TRUE</code></pre>
+<pre class="r"><code>uso_tiempo_2016_b|&gt;
+  filter(edad &gt; &quot;18&quot; &amp; edad &lt; &quot;70&quot; ) </code></pre>
+<pre><code>## # A tibble: 1,862 × 27
+##    hogar sexo   edad dia_laborable         trabajo_pago trabajo_domestico_no_p…¹
+##    &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;                        &lt;dbl&gt;                    &lt;dbl&gt;
+##  1 13_2  Mujer    36 &quot;D\xeda no laborable&quot;          0                       12.5
+##  2 25_2  Mujer    28 &quot;D\xeda laborable&quot;             6.6                      3.8
+##  3 52_2  Mujer    27 &quot;D\xeda laborable&quot;            10                        0.3
+##  4 61_2  Mujer    39 &quot;D\xeda laborable&quot;             7.2                      0  
+##  5 92_1  Varon    19 &quot;D\xeda no laborable&quot;          0                        0  
+##  6 93_1  Varon    19 &quot;D\xeda no laborable&quot;          0                        0.2
+##  7 94_1  Varon    19 &quot;D\xeda no laborable&quot;          0                        0.8
+##  8 95_1  Varon    19 &quot;D\xeda no laborable&quot;          0                        5.3
+##  9 96_1  Mujer    19 &quot;D\xeda no laborable&quot;          0                        0  
+## 10 97_1  Varon    19 &quot;D\xeda laborable&quot;             5.3                      0  
+## # ℹ 1,852 more rows
+## # ℹ abbreviated name: ¹​trabajo_domestico_no_pago
+## # ℹ 21 more variables: voluntariados &lt;dbl&gt;, estudio_educacion &lt;dbl&gt;,
+## #   recreacion &lt;dbl&gt;, aplicaciones &lt;dbl&gt;, tareas_cuidados &lt;dbl&gt;,
+## #   cuidado_personal &lt;dbl&gt;, trabajo_pago2 &lt;dbl&gt;,
+## #   trabajo_domestico_no_pago2 &lt;dbl&gt;, voluntariados2 &lt;dbl&gt;,
+## #   estudio_educacion2 &lt;dbl&gt;, recreacion2 &lt;dbl&gt;, aplicaciones2 &lt;dbl&gt;, …</code></pre>
+<p>Analizamos el tiempo que le dedican las personas mayores de 20 y
+menores a 70 al trabajo remunerado, de cuidado de personal y</p>
 </div>
 <div id="hipótesis" class="section level2">
 <h2>Hipótesis</h2>

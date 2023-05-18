@@ -51,9 +51,9 @@ Conforme la consigna se seleccionaron las variables de interés y se asignó la 
 
 ```{r}
 
-filter(uso_tiempo_2016, edad=="14")
+#filter(uso_tiempo_2016, edad == "14")
 
-filEdad <- filter(uso_tiempo_2016, edad=="14")
+#filEdad <- filter(uso_tiempo_2016, edad == "14")
 
 ```
 Realizamos un filtro de encuestado de 14 años  
@@ -64,13 +64,34 @@ uso_tiempo_2016|>
 
 
 ```
+
 cuenta la cantidad de varones y mujeres encuestadas
 
 ```{r}
-summarize(uso_tiempo_2016, proporción_media = mean (estudio_educacion, na.rm = TRUE))
+summarize(uso_tiempo_2016, proporción_media = mean ("estudio_educacion", na.rm = TRUE))
 ```
 
 Calculamos la media poblacional del tiempo empleado en educacion
+
+```{r}
+uso_tiempo_2016_b <- read_csv("datos/encuesta_uso_tiempo_2016.csv")
+uso_tiempo_2016_b|>
+  filter(edad >"18") |> 
+  group_by(sexo) |>
+  summarize( tiempo_Max = max(trabajo_pago), tiempo_Mim = min(trabajo_pago), desvio = sd(trabajo_pago), na.rm = TRUE)
+
+```
+
+
+```{r}
+uso_tiempo_2016_b|>
+  filter(edad > "18" & edad < "70" ) 
+ 
+```
+
+
+
+Analizamos el tiempo que le dedican las personas mayores de 20 y menores a 70 al trabajo remunerado, de cuidado de personal y 
 
 
 ## Hipótesis
