@@ -141,7 +141,10 @@ Poblacion_activa <- select(Poblacion_activa_uso_del_tiempo, "trabajo_pago", "rec
 
 ```
 
+
 Analizamos el tiempo que le dedican las personas mayores de 18 y menores a 70 a las tareas principales de la semana
+
+
 
 
 ## Hipótesis
