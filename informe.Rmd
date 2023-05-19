@@ -75,7 +75,7 @@ uso_tiempo_2016_seleccv|>
 Este código indica que el promedio de horas x día que varones y mujeres mayores de 18 años de CABA dedican al trabajo doméstico no remunerado. Le desigualdad de género queda reflejada en los valores: las mujeres dedican un promedio de 3 horas aprox. y los varones poco menos de dos horas por día (1.8).
 
 ```{r}
-uso_tiempo_2016_seleccv|>
+estadistica_uso_del_tiempo <- uso_tiempo_2016_seleccv|>
   filter(edad>=18)|>
   group_by(sexo)|>
   summarise(tiempo_max=max(trabajo_domestico_no_pago),tiempo_min=min(trabajo_domestico_no_pago),desvio = sd(trabajo_domestico_no_pago), na.rm = TRUE) 
@@ -132,6 +132,16 @@ group_by(sexo)|>
 summarise(valor_prom_recreacion = mean(recreacion))
 ```
 Los valores promedios del tiempo dedicado por hombres y mujeres de 18 años o más en CABA a actividades de recreación es parejo: 3 horas cada une aprox.
+
+```{r}
+Poblacion_activa_uso_del_tiempo <- uso_tiempo_2016|>
+  filter(edad > "18" & edad < "70" ) 
+
+Poblacion_activa <- select(Poblacion_activa_uso_del_tiempo, "trabajo_pago", "recreacion", "trabajo_domestico_no_pago", "estudio_educacion")
+
+```
+
+Analizamos el tiempo que le dedican las personas mayores de 18 y menores a 70 a las tareas principales de la semana
 
 
 ## Hipótesis
