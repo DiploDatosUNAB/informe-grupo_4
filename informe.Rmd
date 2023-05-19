@@ -24,13 +24,70 @@ read.csv("datos/encuesta_uso_tiempo_2016.csv")
 ¿Qué variables tiene? Tiene variables cuantitativas y cualitativas
 ¿Cuántas observaciones hay? Hay 2336 filas
 ¿Cuántas variables? 27 variables
+<<<<<<< HEAD
 ```{r}
 
+=======
+
+```{r}
+uso_tiempo_2016 |> 
+  select(sexo,trabajo_pago,trabajo_pago2,trabajo_domestico_no_pago,trabajo_domestico_no_pago2,tareas_cuidados, tareas_cuidados2, quintil_ingreso,rango_etario)
+```
+```{r}
+uso_tiempo_2016_acortada <-uso_tiempo_2016 |> 
+  select(sexo,trabajo_pago,trabajo_pago2,trabajo_domestico_no_pago,trabajo_domestico_no_pago2,tareas_cuidados,tareas_cuidados2,quintil_ingreso,rango_etario)
+  
+```
+Conforme la consigna se seleccionaron las variables de interés y se asignó la info generada por la selección a una variable.
+
+```{r}
+
+filter(uso_tiempo_2016, edad == "14")
+
+filEdad <- filter(uso_tiempo_2016, edad == "14")
+
+```
+Realizamos un filtro de encuestado de 14 años  
+
+```{r}
+uso_tiempo_2016|>
+  count("Varon", sexo)
+
+
+```
+
+cuenta la cantidad de varones y mujeres encuestadas
+
+```{r}
+summarize(uso_tiempo_2016, proporción_media = mean ("estudio_educacion", na.rm = TRUE))
+>>>>>>> 80250af6ddd3a431feec855083dfb8b9985539c2
 ```
 
 
 
 
+
+```{r}
+#uso_tiempo_2016_b <- read_csv("datos/encuesta_uso_tiempo_2016.csv")
+Analisis_trabajo <- uso_tiempo_2016|>
+  filter(edad >"18") |> 
+  group_by(sexo) |>
+  summarize( tiempo_Max = max(trabajo_pago), tiempo_Mim = min(trabajo_pago), desvio = sd(trabajo_pago), na.rm = TRUE)
+
+```
+Analisis sobre de la distribucion del  tiempo del trabajo remunerado diferenciado por sexo con bariables estadisticas
+
+```{r}
+activo <- uso_tiempo_2016|>
+  filter(edad > "18" & edad < "70" ) 
+
+Tiempo_activos <- select(activo, "trabajo_pago", "recreacion", "trabajo_domestico_no_pago", "estudio_educacion")
+ 
+```
+
+
+
+Analizamos el tiempo que le dedican las personas mayores de 18 y menores a 70 a las tareas principales de la semana
 
 
 ## Hipótesis

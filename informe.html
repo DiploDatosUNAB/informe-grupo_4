@@ -19110,22 +19110,69 @@ variables</p>
 ## # ℹ 2,326 more rows
 ## # ℹ 5 more variables: trabajo_domestico_no_pago2 &lt;dbl&gt;, tareas_cuidados &lt;dbl&gt;,
 ## #   tareas_cuidados2 &lt;dbl&gt;, quintil_ingreso &lt;chr&gt;, rango_etario &lt;chr&gt;</code></pre>
-<pre class="r"><code>uso_tiempo_2016 &lt;-uso_tiempo_2016 |&gt; 
+<pre class="r"><code>uso_tiempo_2016_acortada &lt;-uso_tiempo_2016 |&gt; 
   select(sexo,trabajo_pago,trabajo_pago2,trabajo_domestico_no_pago,trabajo_domestico_no_pago2,tareas_cuidados,tareas_cuidados2,quintil_ingreso,rango_etario)</code></pre>
 <p>Conforme la consigna se seleccionaron las variables de interés y se
 asignó la info generada por la selección a una variable.</p>
-<pre class="r"><code>filter</code></pre>
-<pre><code>## function (.data, ..., .by = NULL, .preserve = FALSE) 
-## {
-##     check_by_typo(...)
-##     by &lt;- enquo(.by)
-##     if (!quo_is_null(by) &amp;&amp; !is_false(.preserve)) {
-##         abort(&quot;Can&#39;t supply both `.by` and `.preserve`.&quot;)
-##     }
-##     UseMethod(&quot;filter&quot;)
-## }
-## &lt;bytecode: 0x000001be09d37868&gt;
-## &lt;environment: namespace:dplyr&gt;</code></pre>
+<pre class="r"><code>filter(uso_tiempo_2016, edad == &quot;14&quot;)</code></pre>
+<pre><code>## # A tibble: 15 × 27
+##    hogar sexo   edad dia_laborable         trabajo_pago trabajo_domestico_no_p…¹
+##    &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;                        &lt;dbl&gt;                    &lt;dbl&gt;
+##  1 1_1   Varon    14 &quot;D\xeda no laborable&quot;            0                      0.1
+##  2 2_1   Varon    14 &quot;D\xeda no laborable&quot;            0                      1  
+##  3 3_1   Varon    14 &quot;D\xeda no laborable&quot;            0                      0.2
+##  4 4_1   Varon    14 &quot;D\xeda no laborable&quot;            0                      1.8
+##  5 5_1   Varon    14 &quot;D\xeda no laborable&quot;            0                      0  
+##  6 6_1   Mujer    14 &quot;D\xeda no laborable&quot;            0                      3  
+##  7 7_1   Mujer    14 &quot;D\xeda no laborable&quot;            0                      0.3
+##  8 8_1   Mujer    14 &quot;D\xeda no laborable&quot;            0                      0.3
+##  9 9_1   Mujer    14 &quot;D\xeda no laborable&quot;            0                      0.3
+## 10 10_1  Mujer    14 &quot;D\xeda no laborable&quot;            0                      1.1
+## 11 11_1  Mujer    14 &quot;D\xeda no laborable&quot;            0                      0  
+## 12 12_1  Mujer    14 &quot;D\xeda no laborable&quot;            0                      0  
+## 13 13_1  Mujer    14 &quot;D\xeda no laborable&quot;            0                      0  
+## 14 14_1  Varon    14 &quot;D\xeda no laborable&quot;            0                      0  
+## 15 15_1  Varon    14 &quot;D\xeda no laborable&quot;            0                      0  
+## # ℹ abbreviated name: ¹​trabajo_domestico_no_pago
+## # ℹ 21 more variables: voluntariados &lt;dbl&gt;, estudio_educacion &lt;dbl&gt;,
+## #   recreacion &lt;dbl&gt;, aplicaciones &lt;dbl&gt;, tareas_cuidados &lt;dbl&gt;,
+## #   cuidado_personal &lt;dbl&gt;, trabajo_pago2 &lt;dbl&gt;,
+## #   trabajo_domestico_no_pago2 &lt;dbl&gt;, voluntariados2 &lt;dbl&gt;,
+## #   estudio_educacion2 &lt;dbl&gt;, recreacion2 &lt;dbl&gt;, aplicaciones2 &lt;dbl&gt;,
+## #   tareas_cuidados2 &lt;dbl&gt;, cuidado_personal2 &lt;dbl&gt;, dia_tipico &lt;chr&gt;, …</code></pre>
+<pre class="r"><code>filEdad &lt;- filter(uso_tiempo_2016, edad == &quot;14&quot;)</code></pre>
+<p>Realizamos un filtro de encuestado de 14 años</p>
+<pre class="r"><code>uso_tiempo_2016|&gt;
+  count(&quot;Varon&quot;, sexo)</code></pre>
+<pre><code>## # A tibble: 2 × 3
+##   `&quot;Varon&quot;` sexo      n
+##   &lt;chr&gt;     &lt;chr&gt; &lt;int&gt;
+## 1 Varon     Mujer  1345
+## 2 Varon     Varon   991</code></pre>
+<p>cuenta la cantidad de varones y mujeres encuestadas</p>
+<pre class="r"><code>summarize(uso_tiempo_2016, proporción_media = mean (&quot;estudio_educacion&quot;, na.rm = TRUE))</code></pre>
+<pre><code>## Warning: There was 1 warning in `summarize()`.
+## ℹ In argument: `proporción_media = mean(&quot;estudio_educacion&quot;, na.rm = TRUE)`.
+## Caused by warning in `mean.default()`:
+## ! argument is not numeric or logical: returning NA</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   proporción_media
+##              &lt;dbl&gt;
+## 1               NA</code></pre>
+<p>Calculamos la media poblacional del tiempo empleado en educacion</p>
+<pre class="r"><code>#uso_tiempo_2016_b &lt;- read_csv(&quot;datos/encuesta_uso_tiempo_2016.csv&quot;)
+Analisis_trabajo &lt;- uso_tiempo_2016|&gt;
+  filter(edad &gt;&quot;18&quot;) |&gt; 
+  group_by(sexo) |&gt;
+  summarize( tiempo_Max = max(trabajo_pago), tiempo_Mim = min(trabajo_pago), desvio = sd(trabajo_pago), na.rm = TRUE)</code></pre>
+<p>Analisis sobre de la distribucion del tiempo del trabajo remunerado
+diferenciado por sexo con bariables estadisticas</p>
+<pre class="r"><code>activo &lt;- uso_tiempo_2016|&gt;
+  filter(edad &gt; &quot;18&quot; &amp; edad &lt; &quot;70&quot; ) 
+
+Tiempo_activos &lt;- select(activo, &quot;trabajo_pago&quot;, &quot;recreacion&quot;, &quot;trabajo_domestico_no_pago&quot;, &quot;estudio_educacion&quot;)</code></pre>
+<p>Analizamos el tiempo que le dedican las personas mayores de 18 y
+menores a 70 a las tareas principales de la semana</p>
 </div>
 <div id="hipótesis" class="section level2">
 <h2>Hipótesis</h2>
