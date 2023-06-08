@@ -4,11 +4,6 @@ author: "Pilar Thill - Grupo 4"
 date: "2023-05-19"
 output: html_document
 ---
----
-title: "TP 1 Grupo 4"
-author: "Claudia Magliano y Pilar Thill"
-output: html_document
----
 
 ```{r setup, include=FALSE}
 #knitr::opts_chunk$set(echo = TRUE)
