@@ -141,3 +141,5 @@ Los valores promedios del tiempo dedicado por hombres y mujeres de 18 años o m�
 2 Existe una relación entre la cantidad de horas que dedican las mujeres a las tareas de cuidado y el tiempo que le dedican los varones (feminización del cuidado, pobreza de tiempos: la desigual distribución de tareas reproductivas incide en el tiempo que las mujeres de CABA disponen para conseguir empleos, participar en actividades recreativas e incluso procurarse autocuidado).
 
 3 Existe una relación entre el nivel educativo y la cantidad de horas que las mujeres dedican al trabajo remunerado.
+
+## 
