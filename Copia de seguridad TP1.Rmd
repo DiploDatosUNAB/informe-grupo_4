@@ -1,6 +1,6 @@
 ---
-title: "TP1"
-author: "Pilar Thill y Claudia Magliano - Grupo 4"
+title: "TP 2"
+author: "Pilar Thill - Grupo 4"
 date: "2023-05-19"
 output: html_document
 ---
