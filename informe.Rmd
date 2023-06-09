@@ -9,7 +9,6 @@ output: html_document
 library(readr)
 library(dplyr)
 library(ggplot2)
-library (tidyr)
 ```
 
 ## Introducción
@@ -269,10 +268,8 @@ media_trabajo_pago_por_nivel_educ|>
 
 Este gráfico confirma la hipótesis planteada: a mayor nivel educativo, mayor es el promedio de horas que las mujeres dedican al trabajo pago.
 
-```{r}
-
-```
-
 
 ##### Conclusiones
-
+En el caso de la primera hipótesis, entiendo que la formulé de manera errónea,con parámetros demasiado específicos (debería haber sido la relación entre la cantidad de horas que las mujeres destinan al trabajo doméstico no pago y la cantidad de horas que dedican al trabajo pago). No obstante, surgieron datos interesantes: las mujeres desocupadas de 18 años o más residentes en CABA dedican un promedio mayor de horas a tareas de cuidado y al trabajo doméstico no pago que aquellas que están ocupadas.Es decir que el estado ocupacional incide en el tiempo que las mujeres dedican al trabajo reproductivo(tareas de cuidado+trabajo doméstico no pago)
+Con relación a la segunda hipótesis, también entiendo que estuvo mal redactada porque debería haberme referido a las desigualdades de género que fundamentan los resultados del análisis hecho. Lo que apareció claro es que las tareas de cuidado están feminizadas: es mayor el promedio de horas que mujeres dedican a tareas de cuidados y trabajo doméstico no pago que el promedio que dedican los varones.Asimismo,se registró un mayor promedio de horas dedicadas al trabajo pago en el caso de los varones.
+En el caso de tercera hipótesis, resultó confirmada: a mayor nivel educativo, mayor es el promedio de horas que las mujeres dedican al trabajo remunerado. 
