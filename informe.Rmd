@@ -34,7 +34,7 @@ select(sexo,edad,trabajo_pago,trabajo_pago2,trabajo_domestico_no_pago,trabajo_do
 
 ```
 
-Conforme lo señalado en la consigna se seleccionaron las variables de interés y se asignó la info generada a una variable. En este punto tuvimos un problema de interpretación del dataset que no pudimos resolver, aún habiendo consultando el Informe 2017 sobre esta encuesta y el cuestionario de relevamiento. Como se observa, hay variables con misma denominación diferenciadas con el "2" que tienen valores disímiles en las observaciones. Ej: tareas_cuidados y tareas_cuidados2, ¿qué tipo de tareas de cuidado engloban esas distinciones? no lo sabemos..... La variable quintil_ingreso también la eliminamos porque tenía una sola categoría en las observaciones: 5to quintil de ingresos (procentaje de población más rica). También nos resultó raro porque en el Informe dice que se entrevistaron personas residentes en distintos barrios y asentamientos.
+Conforme lo señalado en la consigna se seleccionaron las variables de interés y se asignó la info generada a una variable. En este punto tuve un problema de interpretación del dataset que no pude resolver, aún habiendo consultando el Informe 2017 sobre esta encuesta y el cuestionario de relevamiento. Como se observa, hay variables con misma denominación diferenciadas con el "2" que tienen valores disímiles en las observaciones. Ej: tareas_cuidados y tareas_cuidados2, ¿qué tipo de tareas de cuidado engloban esas distinciones? no lo sé..... La variable quintil_ingreso también la eliminé porque tenía una sola categoría en las observaciones: 5to quintil de ingresos (procentaje de población más rica). También me resultó raro porque en el Informe dice que se entrevistaron personas residentes en distintos barrios y asentamientos.
 
 ```{r}
 filter(uso_tiempo_2016_seleccv,edad>=18)|>
@@ -51,7 +51,7 @@ uso_tiempo_2016_seleccv|>
   summarise(tiempo_max_trabajod_nopago = max(trabajo_domestico_no_pago))  
 
 ```
-Este código nos permite observar el valor máximo del tiempo (horas) que mujeres y varones de 18 años o más en CABA dedican al trabajo doméstico no remunerado: existen poco más de tres horas y media de diferencia entre ambas máximas respectivamente (15horas aprox. en el caso de las mujeres y 12 en el caso de los hombres). Estimamos que es el valor máx. por día laborable, pero tenemos dudas.
+Este código nos permite observar el valor máximo del tiempo (horas) que mujeres y varones de 18 años o más en CABA dedican al trabajo doméstico no remunerado: existen poco más de tres horas y media de diferencia entre ambas máximas respectivamente (15horas aprox. en el caso de las mujeres y 12 en el caso de los hombres). Es el valor máx. por día laborable.
 
 
 ```{r}
@@ -77,7 +77,7 @@ uso_tiempo_2016_seleccv|>
 Este código indica que el promedio de horas x día que varones y mujeres mayores de 18 años de CABA dedican al trabajo doméstico no remunerado. Le desigualdad de género queda reflejada en los valores: las mujeres dedican un promedio de 3 horas aprox. y los varones poco menos de dos horas por día (1.8).
 
 ```{r}
-estadistica_uso_del_tiempo <- uso_tiempo_2016_seleccv|>
+uso_tiempo_2016_seleccv|>
   filter(edad>=18)|>
   group_by(sexo)|>
   summarise(tiempo_max=max(trabajo_domestico_no_pago),tiempo_min=min(trabajo_domestico_no_pago),desvio = sd(trabajo_domestico_no_pago), na.rm = TRUE) 
@@ -135,25 +135,70 @@ summarise(valor_prom_recreacion = mean(recreacion))
 ```
 Los valores promedios del tiempo dedicado por hombres y mujeres de 18 años o más en CABA a actividades de recreación es parejo: 3 horas cada une aprox.
 
-```{r}
-Poblacion_activa_uso_del_tiempo <- uso_tiempo_2016|>
-  filter(edad > "18" & edad < "70" ) 
 
-Poblacion_activa <- select(Poblacion_activa_uso_del_tiempo, "trabajo_pago", "recreacion", "trabajo_domestico_no_pago", "estudio_educacion")
-
-```
-
-
-Analizamos el tiempo que le dedican las personas mayores de 18 y menores a 70 a las tareas principales de la semana
-
-
-
-
-## Hipótesis
-1 Existe una relación entre las mujeres que dedican 4 horas o más al trabajo doméstico no remunerado y su acceso a trabajos asalariados.
+### Hipótesis
+1 Existe una relación entre las mujeres que dedican 4 horas o más al trabajo doméstico no remunerado y su acceso al trabajo asalariado.
  
 2 Existe una relación entre la cantidad de horas que dedican las mujeres a las tareas de cuidado y el tiempo que le dedican los varones (feminización del cuidado, pobreza de tiempos: la desigual distribución de tareas reproductivas incide en el tiempo que las mujeres de CABA disponen para conseguir empleos, participar en actividades recreativas e incluso procurarse autocuidado).
 
 3 Existe una relación entre el nivel educativo y la cantidad de horas que las mujeres dedican al trabajo remunerado.
+
+#### Prueba de hipótesis
+
+**1. ¿Existe una relación entre las mujeres que dedican 4hs o más al trabajo doméstico no remunerado y su acceso al trabajo asalariado?**
+
+```{r}
+uso_tiempo_2016|>
+  filter (trabajo_domestico_no_pago >= 4, edad>=18, sexo=="Mujer")|>
+  ggplot(mapping=aes(trabajo_domestico_no_pago,trabajo_pago))+
+  geom_line(aes(colour= as.factor(sexo)))+
+  geom_point()
+  
+```
+
+
+En este gráfico los puntos muestran la relación entre las mujeres de 18 años o más de CABA que dedican 4 horas o más al trabajo doméstico no pago y las horas que dedican al trabajo pago. No queda del todo clara cuál es la relación, aunque a priori pareciera que a mayor cantidad de horas dedicadas al trabajo doméstico no pago, menor es la cantidad de horas destinadas al trabajo remunerado. Hay muchos puntos sobre la base del eje de ordenadas, lo cual denota que muchas mujeres no destinan horas al trabajo pago directamente, aún registrando 4hs o más de trabajo doméstico no pago. 
+
+Veamos entonces cuál es la relación entre las horas que las mujeres de más de 18 años dedican 4 horas o más al trabajo doméstico no pago y su estado ocupacional.
+
+
+```{r}
+uso_tiempo_2016|>
+  filter (tareas_cuidados>=4,edad>=18, sexo=="Mujer")|>
+  ggplot(aes(tareas_cuidados,trabajo_pago))+
+  geom_point(colour="red")
+
+```
+
+En este gráfico de puntos muestra que la relación entre el tiempo dedicado a tareas de cuidado y el tiempo dedicado al trabajo pago por mujeres de CABA de. Los puntos están bastante dispersos, pero se puede observar cosas en común con el gráfico anterior: i) a medida que se incrementan la cantidad de hs. destinadas a tareas de cuidado, pareciera que decrece la cantidad de horas dedicadas al trabajo pago y ii) también hay mucha concentración de casos en la base del eje de ordenadas, lo cual indica que hay mujeres de 18 años o más que dedican 4hs.o más a tareas de cuidado y no disponen de un trabajo.
+
+```{r}
+mujeres_medias<-uso_tiempo_2016|>
+  select(sexo,edad,estado_ocupacional,trabajo_pago,trabajo_domestico_no_pago,tareas_cuidados)|>
+  filter(edad>=18, sexo=="Mujer")|>
+  mutate(media_trabajo_pago=mean(trabajo_pago))|>
+  mutate(media_trabajo_domestico_no_pago=mean(trabajo_domestico_no_pago))|>
+  mutate (media_tareas_cuidados=mean(tareas_cuidados))
+```
+
+Asigné el código a una nueva variable para ver cuál es la relación entre el estado ocupacional de las mujeres de 18 años o más en CABA y el tiempo promedio que dedican al trabajo doméstico no pago.
+
+```{r}
+mujeres_medias|>
+  group_by(estado_ocupacional)|>
+  summarise(media_trabajo_domestico_no_pago=mean(trabajo_domestico_no_pago))|>
+  ggplot(mapping =aes(estado_ocupacional,media_trabajo_domestico_no_pago,fill=estado_ocupacional))+
+  geom_col()
+
+```
+
+Este gráfico muestra que las mujeres residentes en CABA (de 18 años o más) que dedican un mayor promedio de horas al trabajo doméstico no remunerado son aquellas que están desocupadas o inactivas.
+
+**¿Existe una relación entre la cantidad de horas que dedican las mujeres a las tareas de cuidado y el tiempo que le dedican los varones?** 
+
+(feminización del cuidado, pobreza de tiempos: la desigual distribución de tareas reproductivas incide en el tiempo que las mujeres de CABA disponen para conseguir empleos, participar en actividades recreativas e incluso procurarse autocuidado)
+
+
+
 
 
