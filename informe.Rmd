@@ -1,7 +1,9 @@
 ---
 title: "TP 2 - Grupo 4"
 author: "Pilar Thill"
-output: html_document
+output: 
+  html_document:
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
@@ -30,6 +32,7 @@ uso_tiempo_2016<-read.csv("datos/encuesta_uso_tiempo_2016.csv")
 ```{r}
 uso_tiempo_2016_seleccv<-uso_tiempo_2016|>
 select(sexo,edad,trabajo_pago,trabajo_pago2,trabajo_domestico_no_pago,trabajo_domestico_no_pago2,tareas_cuidados, tareas_cuidados2,nivel_educativo,estado_ocupacional,recreacion,recreacion2)
+  
 
 ```
 
@@ -39,6 +42,7 @@ Conforme lo señalado en la consigna se seleccionaron las variables de interés 
 filter(uso_tiempo_2016_seleccv,edad>=18)|>
   group_by(sexo)|>
   summarise(conteo = n())
+ 
 ```
 
 Con la ejecución de este código nuestra idea fue ver cómo se compone la muestra excluyendo personas entrevistadas menores de 18 años, es decir que excluimos niños, niñas y adolescentes (conf. Ley N° 26.061). Lo que vimos es que hay 1316 observaciones (filas) correspondientes a mujeres y 953 a varones dentro de la variable sexo.
@@ -47,7 +51,7 @@ Con la ejecución de este código nuestra idea fue ver cómo se compone la muest
 uso_tiempo_2016_seleccv|>
   filter(edad>=18)|>
   group_by(sexo)|>
-  summarise(tiempo_max_trabajod_nopago = max(trabajo_domestico_no_pago))  
+  summarise(tiempo_max_trabajod_nopago = max(trabajo_domestico_no_pago))
 
 ```
 Este código nos permite observar el valor máximo del tiempo (horas) que mujeres y varones de 18 años o más en CABA dedican al trabajo doméstico no remunerado: existen poco más de tres horas y media de diferencia entre ambas máximas respectivamente (15horas aprox. en el caso de las mujeres y 12 en el caso de los hombres). Es el valor máx. por día laborable.
@@ -181,6 +185,8 @@ Asigné el código a una nueva variable para ver cuál es la relación entre el 
 
 
 ```{r}
+#|fig.cap="Promedio de horas que las mujeres de 18 o más dedican al trabajo doméstico no pago según su estado ocupacional"
+
 mujeres_medias|>
   group_by(estado_ocupacional)|>
   summarise(media_trabajo_domestico_no_pago=mean(trabajo_domestico_no_pago,na.rm = TRUE))|>
@@ -193,6 +199,8 @@ mujeres_medias|>
 Este gráfico muestra que las mujeres residentes en CABA (de 18 años o más) que dedican un mayor promedio de horas al trabajo doméstico no remunerado son aquellas que están desocupadas o inactivas.
 
 ```{r}
+#|fig.cap="Promedio de horas que las mujeres de 18 o más dedican a tareas de cuidado según su estado ocupacional"
+
 mujeres_medias|>
   group_by(estado_ocupacional)|>
   summarise(prom_tareas_cuidados=mean(tareas_cuidados,na.rm = TRUE))|>
