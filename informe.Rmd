@@ -22,7 +22,7 @@ Captura información sobre distintas variables de personas residentes en CABA: s
 A partir del análisis de los datos arrojados por esta encuesta se podría ponderar la diferencia en el uso del tiempo entre varones y mujeres (sobre todo en la esfera de los cuidados), el índice de la feminización de las tareas de cuidado, etc.
 
 ## Exploración de los datos
-```{r include=FALSE}
+```{r}
 uso_tiempo_2016<-read.csv("datos/encuesta_uso_tiempo_2016.csv")
 
 ```
@@ -263,7 +263,6 @@ Este código muestra que las mujeres consideradas inactivas representan casi la 
 
 
 ```{r}
-#| fig.cap ="Promedio de horas que las mujeres de 18 o más dedican a tareas de cuidado según su estado ocupacional"
 
 mujeres_18|>
   group_by(estado_ocupacional)|>
@@ -285,7 +284,6 @@ b. Las mujeres inactivas que están jubiladas o en edad escolar en CABA no dedic
 (feminización del cuidado, pobreza de tiempos: la desigual distribución de tareas reproductivas incide en el tiempo que las mujeres de CABA disponen para conseguir empleos, participar en actividades recreativas,etc)
 
 ```{r}
-#| fig.cap = "Promedio de horas que mujeres y varones de 18 o más dedican a trabajo doméstico no pago."
 
 uso_tiempo_2016|>
   filter(edad>=18)|>
@@ -301,7 +299,6 @@ geom_col(colour="black")
 Este gráfico muestra que la media de horas que las mujeres de 18 años o más residentes en Caba es notablemente superior a la media que dedican los hombres a partir de esa misma edad.
 
 ```{r}
-#| fig.cap="Promedio de horas que mujeres y varones de 18 o más dedican a tareas de cuidados."
 
 uso_tiempo_2016|>
   filter(edad>=18)|>
@@ -316,7 +313,6 @@ geom_col(colour= "black")
 Este gráfico muestra que la media de horas que las mujeres de 18 años o más residentes en CABA dedican a tareas de cuidados es superior a la media de horas que dedican los varones a partir de la misma edad por día.
 
 ```{r}
-#| fig.cap =""Promedio de horas que mujeres y varones de 18 o más dedican al trabajo pago"
 uso_tiempo_2016|>
   filter(edad>=18)|>
   group_by(sexo)|>
@@ -329,7 +325,6 @@ geom_col(colour="black")
 Con este gráfico se observa claramente cómo los varones mayores de 18 años residentes en CABA registran un promedio superior de horas dedicadas al trabajo pago que el promedio de las mujeres.
 
 ```{r fig.height=8, fig.width=8}
-#| fig.cap = "frecuencia de casos de mujeres de 18 años o más por intervalos de horas de trabajo doméstico no pago"
 
 mujeres_18|>
   mutate (trabajo_domestico_no_pago_discretizado=cut(trabajo_domestico_no_pago,breaks = 5))|>
@@ -355,7 +350,6 @@ media_trabajo_pago_por_nivel_educ<-uso_tiempo_2016|>
 Creé una nueva variable que retrata el promedio de las horas de trabajo pago para las mujeres de 18 años o más residentes en CABA según su nivel educativo.
 
 ```{r}
-#| fig.cap ="Nivel educativo de mujeres de 18 años o más de CABA por promedio de tiempo dedicado al trabajo pago"
 
 media_trabajo_pago_por_nivel_educ|>
   arrange(nivel_educativo)|>
