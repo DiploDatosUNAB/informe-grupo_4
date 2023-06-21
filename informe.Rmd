@@ -22,7 +22,7 @@ Captura información sobre distintas variables de personas residentes en CABA: s
 A partir del análisis de los datos arrojados por esta encuesta se podría ponderar la diferencia en el uso del tiempo entre varones y mujeres (sobre todo en la esfera de los cuidados), el índice de la feminización de las tareas de cuidado, etc.
 
 ## Exploración de los datos
-```{r}
+```{r include=FALSE}
 uso_tiempo_2016<-read.csv("datos/encuesta_uso_tiempo_2016.csv")
 
 ```
@@ -334,6 +334,8 @@ mujeres_18|>
   geom_bar(aes(x = trabajo_domestico_no_pago_discretizado, y = frecuencia, fill=trabajo_domestico_no_pago_discretizado),stat = "identity")
   
 ```
+
+
 Este gráfico muestra que la mayor concentración de mujeres (+ de 700 casos) de 18 años  o más residentes en CABA dedica hasta 3 horas al trabajo doméstico no pago.
 
 
