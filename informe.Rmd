@@ -7,7 +7,6 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 
 library(readr)
 library(dplyr)
@@ -40,7 +39,7 @@ select(sexo,edad,trabajo_pago,trabajo_pago2,trabajo_domestico_no_pago,trabajo_do
 
 Conforme lo señalado en la consigna se seleccionaron las variables de interés y se asignó la info generada a una variable. 
 
-```{r}
+```{r include=FALSE}
 uso_tiempo_2016|>
 filter(quintil_ingreso=="5to quintil")
 ```
