@@ -11,6 +11,7 @@ output:
 library(readr)
 library(dplyr)
 library(ggplot2)
+library(tidyr)
 ```
 
 ## Introducción
@@ -41,7 +42,8 @@ Conforme lo señalado en la consigna se seleccionaron las variables de interés 
 ```{r}
 filter(uso_tiempo_2016_seleccv,edad>=18)|>
   group_by(sexo)|>
-  summarise(conteo = n())
+  summarise(conteo = n())|>
+  knitr::kable()
  
 ```
 
@@ -51,43 +53,30 @@ Con la ejecución de este código nuestra idea fue ver cómo se compone la muest
 uso_tiempo_2016_seleccv|>
   filter(edad>=18)|>
   group_by(sexo)|>
-  summarise(tiempo_max_trabajod_nopago = max(trabajo_domestico_no_pago))
+  summarise(tiempo_max_trabajod_nopago = max(trabajo_domestico_no_pago),tiempo_min_trabajod_nopago = min(trabajo_domestico_no_pago),promedio_trabajod_no_pago = mean(trabajo_domestico_no_pago,na.rm = TRUE))|>
+  knitr::kable()
 
 ```
-Este código nos permite observar el valor máximo del tiempo (horas) que mujeres y varones de 18 años o más en CABA dedican al trabajo doméstico no remunerado: existen poco más de tres horas y media de diferencia entre ambas máximas respectivamente (15horas aprox. en el caso de las mujeres y 12 en el caso de los hombres). Es el valor máx. por día laborable.
 
+
+Este código nos permite observar valores máximos, mínimos y promedios del tiempo (horas) que mujeres y varones de 18 años o más en CABA dedican al trabajo doméstico no remunerado: 
+
+1. Existen poco más de tres horas y media de diferencia entre ambas máximas respectivamente (15horas aprox. en el caso de las mujeres y 12 en el caso de los hombres). Es el valor máx. por día laborable.
+
+2. Los valores correspondientes al tiempo mínimo dedicado al trabajo doméstico no pago por varones y mujeres de 18 años o más es de 0, razón por la cual -a priori- pienso que existe una gran dispersión de los datos ponderados para esta variable con relación a su valor promedio.
+
+3. El promedio de horas x día que varones y mujeres mayores de 18 años de CABA dedican al trabajo doméstico no remunerado refleja la desigualdad de género: las mujeres dedican un promedio de 3 horas aprox. y los varones poco menos de dos horas por día (1.8).
 
 ```{r}
 uso_tiempo_2016_seleccv|>
   filter(edad>=18)|>
   group_by(sexo)|>
-  summarise(tiempo_min_trabajod_nopago = min(trabajo_domestico_no_pago)) 
+  summarise(desvio = sd(trabajo_domestico_no_pago))|>
+  knitr::kable()
 
 ```
 
-Los valores correspondientes al tiempo mínimo dedicado al trabajo doméstico no pago por varones y mujeres de 18 años o más es de 0, razón por la cual -a priori- pensamos que existe una gran dispersión de los datos ponderados para esta variable con relación a su valor promedio.
-
-
-```{r}
-uso_tiempo_2016_seleccv|>
-  filter(edad>=18)|>
-  group_by(sexo)|>
-  summarise(promedio_Trabajod_no_pago = mean(trabajo_domestico_no_pago)) 
-
-
-```
-
-Este código indica que el promedio de horas x día que varones y mujeres mayores de 18 años de CABA dedican al trabajo doméstico no remunerado. Le desigualdad de género queda reflejada en los valores: las mujeres dedican un promedio de 3 horas aprox. y los varones poco menos de dos horas por día (1.8).
-
-```{r}
-uso_tiempo_2016_seleccv|>
-  filter(edad>=18)|>
-  group_by(sexo)|>
-  summarise(tiempo_max=max(trabajo_domestico_no_pago),tiempo_min=min(trabajo_domestico_no_pago),desvio = sd(trabajo_domestico_no_pago), na.rm = TRUE) 
-
-```
-
-Efectivamente, como pensábamos, se verifica una gran dispersión de los datos sobre el tiempo que varones y mujeres mayores de 18 años en CABA dedican al trabajo doméstico no remunerado: el desvío en el caso de las mujeres es mucho más pronunciado (llega a 2,6 respecto del valor promedio) que en el caso de los varones (1.9).
+Efectivamente, se verifica una gran dispersión de los datos sobre el tiempo que varones y mujeres mayores de 18 años en CABA dedican al trabajo doméstico no remunerado: el desvío en el caso de las mujeres es mucho más pronunciado (llega a 2,6 respecto del valor promedio) que en el caso de los varones (1.9).
 
 
 ```{r}
@@ -185,7 +174,7 @@ Asigné el código a una nueva variable para ver cuál es la relación entre el 
 
 
 ```{r}
-#|fig.cap="Promedio de horas que las mujeres de 18 o más dedican al trabajo doméstico no pago según su estado ocupacional"
+#| fig.cap="Promedio de horas que las mujeres de 18 o más dedican al trabajo doméstico no pago según su estado ocupacional"
 
 mujeres_medias|>
   group_by(estado_ocupacional)|>
